@@ -1,4 +1,4 @@
-const API_URL = "http://localhost:3000";
+const API_URL = "https://igrii-shop.onrender.com";
 
 document.addEventListener("DOMContentLoaded", async () => {
   await cargarCategorias();

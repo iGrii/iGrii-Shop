@@ -1,4 +1,4 @@
-const API_URL = "http://localhost:3000";
+const API_URL = "https://igrii-shop.onrender.com";
 const token = localStorage.getItem("token");
 if (!token) window.location.href = "login.html";
 

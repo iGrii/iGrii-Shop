@@ -1,4 +1,4 @@
-const API_URL = "http://localhost:3000/usuarios";
+const API_URL = "https://igrii-shop.onrender.com";
 
 // Iniciar sesión
 document.getElementById("loginForm").addEventListener("submit", async (e) => {

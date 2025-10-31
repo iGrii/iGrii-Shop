@@ -3,47 +3,47 @@ const router = express.Router();
 const db = require("../db");
 const { verifyToken } = require("../middlewares/auth");
 
-// ✅ Obtener todos los productos con su categoría
+// Obtener todos los productos
 router.get("/", async (req, res) => {
   try {
-    const [rows] = await db.query(`
+    const result = await db.query(`
       SELECT 
         p.id, 
         p.nombre, 
-        CAST(p.precio AS DECIMAL(10,2)) AS precio, 
+        p.precio, 
         p.categoria_id,
         c.nombre AS categoria
       FROM productos p
       LEFT JOIN categorias c ON p.categoria_id = c.id
     `);
-    res.json(rows);
+    res.json(result.rows);
   } catch (err) {
     console.error(err);
     res.status(500).json({ error: "Error al obtener productos" });
   }
 });
 
-// ✅ Agregar producto
+// Agregar producto
 router.post("/", verifyToken, async (req, res) => {
   const { nombre, precio, categoria_id } = req.body;
   try {
-    await db.query(
-      "INSERT INTO productos (nombre, precio, categoria_id) VALUES (?, ?, ?)",
+    const result = await db.query(
+      "INSERT INTO productos (nombre, precio, categoria_id) VALUES ($1, $2, $3) RETURNING id, nombre, precio, categoria_id",
       [nombre, precio, categoria_id]
     );
-    res.json({ message: "Producto agregado correctamente" });
+    res.json(result.rows[0]);
   } catch (err) {
     console.error(err);
     res.status(500).json({ error: "Error al agregar producto" });
   }
 });
 
-// ✅ Editar producto
+// Editar producto
 router.put("/:id", verifyToken, async (req, res) => {
   const { nombre, precio, categoria_id } = req.body;
   try {
     await db.query(
-      "UPDATE productos SET nombre=?, precio=?, categoria_id=? WHERE id=?",
+      "UPDATE productos SET nombre=$1, precio=$2, categoria_id=$3 WHERE id=$4",
       [nombre, precio, categoria_id, req.params.id]
     );
     res.json({ message: "Producto actualizado correctamente" });
@@ -53,10 +53,10 @@ router.put("/:id", verifyToken, async (req, res) => {
   }
 });
 
-// ✅ Eliminar producto
+// Eliminar producto
 router.delete("/:id", verifyToken, async (req, res) => {
   try {
-    await db.query("DELETE FROM productos WHERE id=?", [req.params.id]);
+    await db.query("DELETE FROM productos WHERE id=$1", [req.params.id]);
     res.json({ message: "Producto eliminado correctamente" });
   } catch (err) {
     console.error(err);
