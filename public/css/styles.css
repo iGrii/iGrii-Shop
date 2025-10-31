@@ -1,0 +1,41 @@
+/* Paleta de colores pastel */
+:root {
+  --rosa: #f7cad0;
+  --menta: #d0f0c0;
+  --celeste: #c2e7f0;
+  --lavanda: #e6d0f0;
+  --amarillo: #fff3b0;
+}
+
+/* Fondo y hero */
+.pastel-hero {
+  background: linear-gradient(135deg, var(--rosa), var(--lavanda));
+  color: #444;
+}
+
+/* Navbar */
+.pastel-navbar {
+  background-color: var(--menta);
+}
+
+/* Cards */
+.card {
+  border: none;
+  border-radius: 1rem;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  transition: transform 0.2s ease;
+}
+.card:hover {
+  transform: translateY(-5px);
+}
+
+/* Botones */
+.btn-pastel {
+  background-color: var(--celeste);
+  border: none;
+  color: #444;
+  font-weight: 500;
+}
+.btn-pastel:hover {
+  background-color: var(--lavanda);
+}
