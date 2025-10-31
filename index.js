@@ -22,7 +22,7 @@ app.use((req, res, next) => {
   const clientIP = forwarded ? forwarded.split(',')[0].trim() : req.socket.remoteAddress;
 
   // Lista de IPs permitidas
-const allowedIPs = ['190.236.32.54', '179.6.45.110'];
+const allowedIPs = ['190.236.32.54', '179.6.45.110', '190.237.121.91'];
  // agrega aquí tus IPs permitidas
 
   if (allowedIPs.includes(clientIP)) {
